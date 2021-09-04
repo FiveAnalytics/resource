@@ -7,15 +7,7 @@ AddEventHandler('onServerResourceStart', function (resource)
     if GetCurrentResourceName() ~= resource then
         return
     end
-    -- PerformHttpRequest(EndpointURL .. "/api/key/check", function (code, data, headers)
-    --     if code == 401 then
-    --         print('Unauthorized Analytics API Key. Please contact support.')
-    --         return
-    --     elseif code ~= 200 then
-    --         print('Analytics service seems to be offline. Please contact support.')
-    --         return
-    --     end
-    -- end, 'POST', '', {['Content-Type'] = 'application/json', ['Authorization'] = APIKey})
+    -- TODO: Implement Check
 end)
 
 function SendHTTPEvent(source, payload)
