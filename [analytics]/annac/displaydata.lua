@@ -183,8 +183,8 @@ VehicleFlagDisplayName = {
     {Name = "Tyre",             Flag = 93},
     {Name = "Body",             Flag = 116},
     {Name = "Window",           Flag = 120},
-    {Name = "FrontWindscreen", Flag = 122},
-    {Name = "RearWindscreen",  Flag = 121},
+    {Name = "FrontWindscreen",  Flag = 122},
+    {Name = "RearWindscreen",   Flag = 121},
     {Name = "Bumper",           Flag = 117},
 }
 
@@ -197,10 +197,10 @@ DamageTypeDisplayName = {
     {Name = "FireDamage",          Type = 6},
     {Name = "FallDamage",          Type = 8},
     {Name = "ElectricDamage",      Type = 10},
-    {Name = "BarbedWrieDamage",   Type = 11},
+    {Name = "BarbedWrieDamage",    Type = 11},
     {Name = "ExtinguisherDamage",  Type = 12},
     {Name = "GasDamage",           Type = 13},
-    {Name = "WaterCannonDamage",  Type = 14},
+    {Name = "WaterCannonDamage",   Type = 14},
 }
 
 ObjectDisplayName = {

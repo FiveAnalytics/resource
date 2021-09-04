@@ -53,21 +53,3 @@ Citizen.CreateThread(function ()
         Citizen.Wait(1000)
     end
 end)
-
-Citizen.CreateThread(function ()
-    local hash = GetHashKey('a_f_m_fatcult_01')
-    RequestModel(hash)
-    while not HasModelLoaded(hash) do
-        Citizen.Wait(10)
-    end
-    local coords = GetEntityCoords(PlayerPedId())
-    local p = CreatePed(0, hash, coords.x, coords.y, coords.z, 0.0, true, false)
-    
-    GiveWeaponToPed(PlayerPedId(), -1716589765, 100, false, true)
-    while true do
-        FreezeEntityPosition(p, true)
-        ClearPedTasksImmediately(p)
-        Citizen.Wait(1)
-    end
-    -- SetPedArmour(PlayerPedId(), 100)
-end)
