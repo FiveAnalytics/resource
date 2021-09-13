@@ -37,7 +37,7 @@ function SendHTTPEvent(source, payload)
         print(json.encode(payload))
     end
 
-    PerformHttpRequest(EndpointURL .. "/api/send", function (code, data, headers)
+    PerformHttpRequest(EndpointURL .. "/event/send", function (code, data, headers)
         if code ~= 200 then
             -- TODO: Logging
             return
