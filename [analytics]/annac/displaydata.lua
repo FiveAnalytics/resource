@@ -95,7 +95,7 @@ DamageDisplayName = {
     {Name = "Fire",                      Hash = -544306709},
     {Name = "Helicopter Crash",          Hash = 341774354},
     {Name = "Ran Over By Car",           Hash = -1553120962},
-    {Name = "Rammed By Car",             Hash = 133987706},
+    {Name = "Vehicle Ramming",           Hash = 133987706},
     {Name = "Hit By Water Cannon",       Hash = -868994466},
     {Name = "Exhaustion",                Hash = 910830060},
     {Name = "Fall",                      Hash = -842959696},
@@ -203,22 +203,6 @@ DamageTypeDisplayName = {
     {Name = "WaterCannonDamage",   Type = 14},
 }
 
-ObjectDisplayName = {
-    {Name = "Gas Pump",         Hash = -2007231801},
-    {Name = "Gas Pump",         Hash = 1933174915},
-    {Name = "Gas Pump",         Hash = 1694452750},
-    {Name = "Gas Pump",         Hash = -164877493},
-    {Name = "Gas Pump",         Hash = -469694731},
-    {Name = "Gas Pump",         Hash = 1339433404},
-    {Name = "Gas Pump",         Hash = -462817101},
-    {Name = "Gas Tank",         Hash = -2129526670},
-    {Name = "Gas Tank",         Hash = -46303329},
-    {Name = "Gas Tank",         Hash = -353447166},
-    {Name = "Gas Tank",         Hash = -9837968},
-    {Name = "Burger Stand",     Hash = 1129053052},
-    {Name = "Tank Trailer",     Hash = -531344027},
-}
-
 function GetDamageDisplayName(hash)
     for _, v in pairs(DamageDisplayName) do
         if v.Hash == hash then
@@ -251,15 +235,6 @@ end
 function GetDamageTypeDisplayName(damagetype)
     for _, v in pairs(DamageTypeDisplayName) do
         if v.Type == damagetype then
-            return v.Name
-        end
-    end
-    return ""
-end
-
-function GetObjectDisplayName(object)
-    for _, v in pairs(ObjectDisplayName) do
-        if v.Hash == object then
             return v.Name
         end
     end

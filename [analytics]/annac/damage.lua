@@ -1,11 +1,42 @@
+local Limiter = {
+    {DamageType = 0,   Last = 0, Expiration = 1},
+    {DamageType = 1,   Last = 0, Expiration = 1},
+    {DamageType = 2,   Last = 0, Expiration = 1},
+    {DamageType = 3,   Last = 0, Expiration = 1},
+    {DamageType = 5,   Last = 0, Expiration = 1},
+    {DamageType = 6,   Last = 0, Expiration = 2},
+    {DamageType = 10,  Last = 0, Expiration = 2},
+    {DamageType = 11,  Last = 0, Expiration = 2},
+    {DamageType = 12,  Last = 0, Expiration = 2},
+    {DamageType = 13,  Last = 0, Expiration = 2},
+    {DamageType = 14,  Last = 0, Expiration = 2}
+}
+
+function GetTimestamp()
+    local _, _, _, h, m, s = GetUtcTime()
+    return tonumber(tostring(h) .. tostring(m) .. tostring(s))
+end
+
 AddEventHandler('gameEventTriggered', function (name, data)
     if name == 'CEventNetworkEntityDamage' then
         local aType = GetEntityType(data[2])
         local vType = GetEntityType(data[1])
-        
-        -- Ignore object based events
-        if aType == 3 or vType == 3 then
+        local dType = GetWeaponDamageType(data[7])
+
+        if aType == 0 or vType == 0 or aType == 3 or vType == 3 then
             return
+        end
+
+        local tStamp = GetTimestamp()
+        for _, limit in pairs(Limiter) do
+            if limit.DamageType == dType then
+
+                -- Rate limit types of tick based damage
+                if limit.Last + limit.Expiration > tStamp then
+                    return
+                end
+                limit.Last = tStamp
+            end
         end
         
         local DamageEvent = {
@@ -20,7 +51,7 @@ AddEventHandler('gameEventTriggered', function (name, data)
             VictimHeading    = 0,
             FatalDamage      = data[6] == 1,
             DamageCause      = GetDamageDisplayName(data[7]),
-            DamageType       = GetDamageTypeDisplayName(GetWeaponDamageType(data[7])),
+            DamageType       = GetDamageTypeDisplayName(dType),
             DamageEvent      = "",
             DamagedBone      = "",
         }
@@ -70,44 +101,47 @@ AddEventHandler('gameEventTriggered', function (name, data)
                 DamageEvent.DamagedBone = GetPedBoneDisplayName(bone)
             end
         end
+        if dType == 0 and DamageEvent.DamageCause == "Vehicle Ramming" then
+            DamageEvent.DamageType = "VehicleDamage"
+        end
 
         -- Damage Event Name
         if aType == 1 and vType == 2 and DamageEvent.FatalDamage == true and DamageEvent.AttackerType == "Player" then
-            DamageEvent.DamageEvent = "Player Destroyed Vehicle"
+            DamageEvent.DamageEvent = "PlayerDestroyedVehicle"
         elseif aType == 1 and vType == 2 and DamageEvent.FatalDamage == false and DamageEvent.AttackerType == "Player" then
-            DamageEvent.DamageEvent = "Player Damaged Vehicle"
+            DamageEvent.DamageEvent = "PlayerDamagedVehicle"
         elseif aType == 1 and vType == 2 and DamageEvent.FatalDamage == true and DamageEvent.AttackerType == "Ped" then
-            DamageEvent.DamageEvent = "NPC Destroyed Vehicle"
+            DamageEvent.DamageEvent = "NPCDestroyedVehicle"
         elseif aType == 1 and vType == 2 and DamageEvent.FatalDamage == false and DamageEvent.AttackerType == "Ped" then
-            DamageEvent.DamageEvent = "NPC Damaged Vehicle"
+            DamageEvent.DamageEvent = "NPCDamagedVehicle"
         elseif aType == 2 and vType == 1 and DamageEvent.FatalDamage == true and DamageEvent.VictimType == "Player" then
-            DamageEvent.DamageEvent = "Vehicle Killed Player"
+            DamageEvent.DamageEvent = "VehicleKilledPlayer"
         elseif aType == 2 and vType == 1 and DamageEvent.FatalDamage == false and DamageEvent.VictimType == "Player" then
-            DamageEvent.DamageEvent = "Vehicle Rammed Player"
+            DamageEvent.DamageEvent = "VehicleRammedPlayer"
         elseif aType == 2 and vType == 1 and DamageEvent.FatalDamage == true and DamageEvent.VictimType == "Ped" then
-            DamageEvent.DamageEvent = "Vehicle Killed NPC"
+            DamageEvent.DamageEvent = "VehicleKilledNPC"
         elseif aType == 2 and vType == 1 and DamageEvent.FatalDamage == false and DamageEvent.VictimType == "Ped" then
-            DamageEvent.DamageEvent = "Vehicle Rammed NPC"
+            DamageEvent.DamageEvent = "VehicleRammedNPC"
         elseif aType == 1 and vType == 1 and DamageEvent.FatalDamage == true and DamageEvent.VictimType == "Player" and DamageEvent.AttackerType == "Player" then
-            DamageEvent.DamageEvent = "Player Killed Player"
+            DamageEvent.DamageEvent = "PlayerKilledPlayer"
         elseif aType == 1 and vType == 1 and DamageEvent.FatalDamage == false and DamageEvent.VictimType == "Player" and DamageEvent.AttackerType == "Player" then
-            DamageEvent.DamageEvent = "Player Damaged Player"
+            DamageEvent.DamageEvent = "PlayerDamagedPlayer"
         elseif aType == 1 and vType == 1 and DamageEvent.FatalDamage == true and DamageEvent.VictimType == "Ped" and DamageEvent.AttackerType == "Player" then
-            DamageEvent.DamageEvent = "Player Killed NPC"
+            DamageEvent.DamageEvent = "PlayerKilledNPC"
         elseif aType == 1 and vType == 1 and DamageEvent.FatalDamage == false and DamageEvent.VictimType == "Ped" and DamageEvent.AttackerType == "Player" then
-            DamageEvent.DamageEvent = "Player Damaged NPC"
+            DamageEvent.DamageEvent = "PlayerDamagedNPC"
         elseif aType == 1 and vType == 1 and DamageEvent.FatalDamage == true and DamageEvent.VictimType == "Player" and DamageEvent.AttackerType == "Ped" then
-            DamageEvent.DamageEvent = "NPC Killed Player"
+            DamageEvent.DamageEvent = "NPCKilledPlayer"
         elseif aType == 1 and vType == 1 and DamageEvent.FatalDamage == false and DamageEvent.VictimType == "Player" and DamageEvent.AttackerType == "Ped" then
-            DamageEvent.DamageEvent = "NPC Damaged Player"
+            DamageEvent.DamageEvent = "NPCDamagedPlayer"
         elseif aType == 2 and vType == 2 and DamageEvent.FatalDamage == true then
-            DamageEvent.DamageEvent = "Vehicle Destroyed Vehicle"
+            DamageEvent.DamageEvent = "VehicleDestroyedVehicle"
         elseif aType == 2 and vType == 2 and DamageEvent.FatalDamage == false then
-            DamageEvent.DamageEvent = "Vehicle Rammed Vehicle"
+            DamageEvent.DamageEvent = "VehicleRammedVehicle"
         else
             return
         end
-        
+
         TriggerServerEvent("anna:event", DamageEvent)
     end
 end)
