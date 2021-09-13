@@ -1,6 +1,6 @@
 local APIKey        = GetResourceMetadata("annas", "my_data", 0)
-local EndpointURL   = GetResourceMetadata("annas", "my_data", 1)
-local Development   = GetResourceMetadata("annas", "my_data", 2) == '1'
+local EndpointURL   = 'https://go.fiveanalytics.xyz/v1'
+local DebugMode     = false
 
 -- API Key Check
 AddEventHandler('onServerResourceStart', function (resource)
@@ -33,7 +33,7 @@ function SendHTTPEvent(source, payload)
     end
 
     -- Debugging (DO NOT CHANGE)
-    if Development == true and payload.Event ~= 'ConsoleEvent' then
+    if DebugMode == true and payload.Event ~= 'ConsoleEvent' then
         print(json.encode(payload))
     end
 
