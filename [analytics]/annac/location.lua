@@ -24,6 +24,6 @@ Citizen.CreateThread(function ()
         LocationEvent.CrossingRoad = GetStreetNameFromHashKey(crossing)
 
         TriggerServerEvent("anna:event", LocationEvent)
-        Citizen.Wait(10000)
+        Citizen.Wait(15000)
     end
 end)
