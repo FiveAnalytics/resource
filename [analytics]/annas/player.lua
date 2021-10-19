@@ -27,3 +27,14 @@ AddEventHandler('playerDropped', function (reason)
     }
     SendHTTPEvent(_source, Payload)
 end)
+
+-- HeartBeat for sending number of players online
+Citizen.CreateThread(function ()
+    while true do
+        Citizen.Wait(30000)
+        SendHTTPEvent(0, {
+            Event           = 'ServerPlayersEvent',
+            PlayersOnline   = #GetPlayers(),
+        })
+    end
+end)
