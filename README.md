@@ -6,8 +6,6 @@
   <img src="https://img.shields.io/discord/877414872068001853.svg?color=768AD4&label=discord&logo=https%3A%2F%2Fdiscordapp.com%2Fassets%2F8c9701b98ad4372b58f13fd9f65f966e.svg)](https://discordapp.com/channels/877414872068001853/">
 </p>
 
-## Note: This service is not yet ready for public use.
-
 ## Install 
 1. Download the latest version of our resources from the <a href="https://github.com/FiveAnalytics/resource/releases">Releases tab</a>.
 2. Upload the resources to your server, don't change the folder name.
