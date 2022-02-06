@@ -1,4 +1,4 @@
-![FiveAnalytics Logo](https://cdn.discordapp.com/attachments/877416855264972870/877416891134648340/FiveAnalytics-transparent.png)
+![FiveAnalytics Logo](https://cdn.discordapp.com/attachments/885462840398446642/939774405368770610/fiveanalytics-banna.png)
 <h2 align="center">
   <strong>A service for viewing &amp; analysing statistics & key data for your FiveM server. 📈</strong>
 </h2>
